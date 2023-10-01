@@ -104,7 +104,7 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>()
 
 android {
     compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    namespace = "ca.josuelubaki.common"
+    namespace = "ca.josuelubaki.countryapp.common"
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
@@ -140,6 +140,6 @@ buildkonfig {
 
 apollo {
     service("service") {
-        packageName.set("ca.josuelubaki.common")
+        packageName.set("ca.josuelubaki.countryapp.common")
     }
 }

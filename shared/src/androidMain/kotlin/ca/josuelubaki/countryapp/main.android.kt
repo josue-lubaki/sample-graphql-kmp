@@ -1,4 +1,4 @@
-package ca.josuelubaki
+package ca.josuelubaki.countryapp
 
 import androidx.compose.runtime.Composable
 

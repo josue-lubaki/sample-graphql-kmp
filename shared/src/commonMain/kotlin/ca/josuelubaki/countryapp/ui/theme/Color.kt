@@ -1,4 +1,4 @@
-package ca.josuelubaki.ui.theme
+package ca.josuelubaki.countryapp.ui.theme
 
 /**
  * created by Josue Lubaki

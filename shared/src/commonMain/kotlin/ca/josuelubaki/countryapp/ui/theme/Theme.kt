@@ -1,4 +1,4 @@
-package ca.josuelubaki.ui.theme
+package ca.josuelubaki.countryapp.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
