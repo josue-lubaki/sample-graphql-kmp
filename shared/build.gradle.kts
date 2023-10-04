@@ -1,6 +1,7 @@
-import java.util.Properties
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.plugin.extraProperties
+import org.jetbrains.kotlin.library.impl.extract
+import java.util.Properties
 
 plugins {
     kotlin("multiplatform")
@@ -34,6 +35,9 @@ kotlin {
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
 
+                // Icons
+                api(compose.materialIconsExtended)
+
                 // Precompose
                 api(libs.precompose)
                 api(libs.precompose.viewmodel)
@@ -57,11 +61,14 @@ kotlin {
                 api(libs.atomicfu)
             }
         }
+
         val androidMain by getting {
+            dependsOn(commonMain)
             dependencies {
                 api(libs.activity.compose)
                 api(libs.appcompat)
                 api(libs.core.ktx)
+                api(libs.androidx.foundation)
 
                 // Koin
                 api(libs.koin.android)
@@ -87,19 +94,21 @@ kotlin {
     }
 }
 
-tasks {
-    withType<KotlinCompile> {
-        kotlinOptions {
-            freeCompilerArgs += listOf("-Xskip-prerelease-check")
-        }
-    }
-}
-
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>()
     .configureEach {
         kotlinOptions {
             freeCompilerArgs += listOf("-Xskip-prerelease-check")
         }
+    }
+
+tasks
+    .withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask<*>>()
+    .configureEach {
+        compilerOptions
+            .languageVersion
+            .set(
+                org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_1_9
+            )
     }
 
 android {

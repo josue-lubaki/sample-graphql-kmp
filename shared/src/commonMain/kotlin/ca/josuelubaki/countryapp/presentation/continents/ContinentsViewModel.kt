@@ -1,48 +1,47 @@
-//package ca.josuelubaki.countryapp.presentation.continents
-//
-//import kotlinx.coroutines.CoroutineDispatcher
-//import kotlinx.coroutines.flow.MutableStateFlow
-//import kotlinx.coroutines.flow.StateFlow
-//import kotlinx.coroutines.launch
-//import moe.tlaster.precompose.viewmodel.ViewModel
-//import moe.tlaster.precompose.viewmodel.viewModelScope
-//import org.koin.core.component.KoinComponent
-//import org.koin.core.component.inject
-//
-///**
-// * created by Josue Lubaki
-// * date : 2023-10-01
-// * version : 1.0.0
-// */
-//
-//class ContinentsViewModel(
-//) : ViewModel(), KoinComponent {
-//
-//    private val repository: CountryRepository by inject()
-//    private val dispatcher : CoroutineDispatcher by inject()
-//
-//    private val _state = MutableStateFlow<ContinentsState>(ContinentsState.Idle)
-//    val state get() : StateFlow<ContinentsState> = _state
-//
-//    init {
-//        getContinents()
-//    }
-//
-//    fun getContinents() {
-//        _state.value = ContinentsState.Loading
-//        viewModelScope.launch(dispatcher) {
-//            try {
-//                repository.getAllContinents().collect {
-//                    if (it.isNotEmpty()){
-//                        _state.value = ContinentsState.Success(data = it)
-//                    }
-//                    else {
-//                        _state.value = ContinentsState.Success(data = emptyList())
-//                    }
-//                }
-//            } catch (e : Exception) {
-//                _state.value = ContinentsState.Error(e.message)
-//            }
-//        }
-//    }
-//}
+package ca.josuelubaki.countryapp.presentation.continents
+
+import ca.josuelubaki.countryapp.domain.usecases.GetAllContinentsUseCase
+import ca.josuelubaki.countryapp.utils.HttpError
+import com.apollographql.apollo3.exception.ApolloException
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import moe.tlaster.precompose.viewmodel.ViewModel
+import moe.tlaster.precompose.viewmodel.viewModelScope
+
+/**
+ * created by Josue Lubaki
+ * date : 2023-10-01
+ * version : 1.0.0
+ */
+
+class ContinentsViewModel(
+    private val getAllContinentsUseCase: GetAllContinentsUseCase,
+    private val dispatcher : CoroutineDispatcher
+) : ViewModel() {
+
+    private val _state = MutableStateFlow<ContinentsState>(ContinentsState.Idle)
+    val uiState get() : StateFlow<ContinentsState> = _state.asStateFlow()
+
+    fun onEvent(event: ContinentsEvent){
+        when (event){
+            is ContinentsEvent.OnLoadAllContinents -> getAllContinents()
+        }
+    }
+
+    private fun getAllContinents() {
+        viewModelScope.launch(dispatcher) {
+            _state.value = ContinentsState.Loading
+            _state.value = try {
+                ContinentsState.Success(getAllContinentsUseCase.invoke())
+            } catch (exception: Exception) {
+                ContinentsState.Error(
+                    if ((exception as ApolloException).suppressedExceptions.isNotEmpty()) HttpError.APOLLO_EXCEPTION
+                    else HttpError.UNKNOWN
+                )
+            }
+        }
+    }
+}

@@ -4,12 +4,12 @@ import androidx.compose.runtime.Composable
 import ca.josuelubaki.countryapp.presentation.navigation.Continent
 import ca.josuelubaki.countryapp.presentation.navigation.Continents
 import ca.josuelubaki.countryapp.presentation.navigation.Country
-import ca.josuelubaki.countryapp.screens.continent.ContinentScreen
-import ca.josuelubaki.countryapp.screens.continent.ContinentViewModel
-import ca.josuelubaki.countryapp.screens.continents.ContinentsScreen
-import ca.josuelubaki.countryapp.screens.continents.ContinentsViewModel
-import ca.josuelubaki.countryapp.screens.country.CountryScreen
-import ca.josuelubaki.countryapp.screens.country.CountryViewModel
+import ca.josuelubaki.countryapp.presentation.countries.ContinentScreen
+import ca.josuelubaki.countryapp.presentation.countries.CountriesViewModel
+import ca.josuelubaki.countryapp.presentation.continents.ContinentsScreen
+import ca.josuelubaki.countryapp.presentation.continents.ContinentsViewModel
+import ca.josuelubaki.countryapp.presentation.country.CountryScreen
+import ca.josuelubaki.countryapp.presentation.country.CountryViewModel
 import moe.tlaster.precompose.koin.koinViewModel
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.path
@@ -41,7 +41,7 @@ fun CountryAppSetup() {
         }
 
         scene(route = Continent.routeWithArgs) { backStackEntry ->
-            val vm = koinViewModel(ContinentViewModel::class)
+            val vm = koinViewModel(CountriesViewModel::class)
             val code: String? = backStackEntry.path<String>(Continent.argsName)
             ContinentScreen(
                 code = code,

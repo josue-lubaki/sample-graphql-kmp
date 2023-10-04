@@ -6,7 +6,6 @@ coreKtx = "1.12.0"
 composeVersion = "1.5.2"
 kotlin = "1.9.10"
 konfigVersion = "0.13.3"
-mokoResourcesVersion = "0.23.0"
 precomposeVersion = "1.5.2"
 atomicfu = "0.21.0"
 apolloGraphQLVersion = "3.8.2"
@@ -18,11 +17,7 @@ activity-compose = { module = "androidx.activity:activity-compose", version.ref 
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
 atomicfu = { module = "org.jetbrains.kotlinx:atomicfu", version.ref = "atomicfu" }
-
-# Moko-resources (https://github.com/icerockdev/moko-resources)
-moko-resources = { group = "dev.icerock.moko", name = "resources", version.ref = "mokoResourcesVersion" }
-moko-resources-compose = { group = "dev.icerock.moko", name = "resources-compose", version.ref = "mokoResourcesVersion" }
-resources-generator = { module = "dev.icerock.moko:resources-generator", version.ref = "mokoResourcesVersion" }
+androidx-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "composeVersion" }
 
 # BuildKonfig (https://github.com/yshrsmz/BuildKonfig)
 konfigPlugin = { group = "com.codingfeline.buildkonfig", name = "buildkonfig-gradle-plugin", version.ref = "konfigVersion" }
@@ -59,5 +54,4 @@ kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 compose = { id = "org.jetbrains.compose", version.ref = "composeVersion" }
 konfig = { id = "com.codingfeline.buildkonfig", version.ref = "konfigVersion" }
-mokoResources = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "mokoResourcesVersion" }
 apolloGraphQL = { id = "com.apollographql.apollo3", version.ref = "apolloGraphQLVersion" }

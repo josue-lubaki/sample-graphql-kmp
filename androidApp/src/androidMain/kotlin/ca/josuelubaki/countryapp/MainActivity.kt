@@ -9,8 +9,6 @@ class MainActivity : PreComposeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        initKoin()
-
         setContent {
             MainView()
         }
