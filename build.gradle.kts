@@ -6,7 +6,6 @@ buildscript {
     }
 
     dependencies {
-//        classpath(libs.resources.generator)
         classpath(libs.konfigPlugin)
     }
 }
@@ -20,7 +19,6 @@ plugins {
     alias(libs.plugins.library) apply false
     alias(libs.plugins.compose) apply false
     alias(libs.plugins.konfig) apply false
-//    alias(libs.plugins.mokoResources).apply(false)
     alias(libs.plugins.apolloGraphQL) apply false
 }
 
